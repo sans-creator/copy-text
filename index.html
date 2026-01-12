@@ -18,33 +18,29 @@
     <button onclick="send()">Send to Clipboard</button>
     <p id="msg"></p>
 
-  <script>
-  const API_URL = "https://23b33e2bf335.ngrok-free.app//copy";
+<script>
+  const API_URL = "https://e55e438869e1.ngrok-free.app/copy";
 
   async function send() {
     const text = document.getElementById("txt").value.trim();
     if (!text) return;
 
-    try {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ text })
-      });
+    const res = await fetch(API_URL, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true"
+      },
+      body: JSON.stringify({ text })
+    });
 
-      document.getElementById("msg").innerText =
-        res.ok ? "Text sent to clipboard!" : "Failed to send text.";
-    } catch (e) {
-      document.getElementById("msg").innerText = "Network error.";
-      console.error(e);
-    }
+    document.getElementById("msg").innerText = res.ok ? "Sent!" : "Failed";
   }
 </script>
 
 </body>
 </html>
+
 
 
