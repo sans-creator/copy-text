@@ -3,7 +3,7 @@
 <head>
     <title>Send to Clipboard</title>
     <style>
-        body { font-family: Arial; margin: 30px; }
+        body { font-family: Arial, sans-serif; margin: 30px; }
         textarea { width: 95%; height: 120px; }
         button { padding: 10px 20px; margin-top: 10px; cursor: pointer; }
         p { margin-top: 10px; color: green; }
@@ -19,7 +19,7 @@
     <p id="msg"></p>
 
     <script>
-        const API_URL = "https://bd594df5c14d.ngrok-free.app/copy";
+        const API_URL = "https://cf3dd51119a5.ngrok-free.app/copy"; // We'll replace this with your actual endpoint
 
         async function send() {
             const text = document.getElementById("txt").value;
@@ -27,14 +27,18 @@
 
             let res = await fetch(API_URL, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json"
+                },
                 body: JSON.stringify({ text })
             });
 
-            let data = await res.json();
-            document.getElementById("msg").innerText = data.message;
+            if (res.ok) {
+                document.getElementById("msg").innerText = "Text sent to clipboard!";
+            } else {
+                document.getElementById("msg").innerText = "Failed to send text.";
+            }
         }
     </script>
-
 </body>
 </html>
